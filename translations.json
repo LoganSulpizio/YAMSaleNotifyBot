@@ -1,0 +1,16 @@
+{
+    "EN": {
+        "welcome": "Welcome - use /setlanguage to select your language",
+        "select_language_prompt": "Please select your language:\n",
+        "language_set": "Language set to English.",
+        "your_language": "Your selected language is English.",
+        "invalid_selection": "Invalid selection. Please enter 1 for English or 2 for Français."
+    },
+    "FR": {
+        "welcome": "Bienvenue - utilisez /setlanguage pour sélectionner votre langue",
+        "select_language_prompt": "Veuillez sélectionner votre langue:\n",
+        "language_set": "Langue définie sur le français.",
+        "your_language": "Votre langue sélectionnée est le français.",
+        "invalid_selection": "Sélection invalide. Veuillez entrer 1 pour l'anglais ou 2 pour le français."
+    }
+}

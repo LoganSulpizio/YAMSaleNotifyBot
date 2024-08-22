@@ -1,0 +1,5 @@
+config.json
+user_languages.json
+logfile*
+__pycache__/
+*.pyc
