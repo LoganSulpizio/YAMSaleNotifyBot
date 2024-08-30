@@ -1,0 +1,23 @@
+{
+    "EN": {
+        "select_language_prompt": "Please select your language:\n",
+        "language_set": "Your language has been set up.\nYou can now use the /setwallet command to configure your wallet address. You will be notified for every Realtoken sales you do on the YAM.",
+        "invalid_selection": "Invalid selection. Please select a language",
+        "about": "This bot was developed by @LoganSulpizio\nCheck this project on ",
+        "set_your_wallet" : "Please enter your wallet address: ",
+        "wallet_has_been_set" : "Your wallet address has been set successfully.\nYou will receive notifications for any RealToken you sell on the YAM",
+        "invalid_wallet_format" : "Your address is invalid. Please use a wallet address with a '0x...' format",
+        "check_language": "Your language is set to {user_language}",
+        "check_language_none": "No preferred language has been set up",
+        "check_wallet": "Your wallet address is set to {user_wallet}",
+        "check_wallet_none": "No wallet address has been set up",
+        "sale_message": "You sold *{amount_dec}* token *{property_name}* for *{price_dec}* {token_name_buyer}\nView it on [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
+    },
+    "FR": {
+        "select_language_prompt": "Veuillez sélectionner votre langue:\n",
+        "language_set": "Langue définie sur le français",
+        "your_language": "Votre langue sélectionnée est le français",
+        "invalid_selection": "Sélection invalide. Choisissez parmis les langues proposées",
+        "about": "Ce bot a été développé par @LoganSulpizio\nConsultez ce projet sur "
+    }
+}

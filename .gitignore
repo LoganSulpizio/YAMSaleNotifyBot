@@ -1,5 +1,11 @@
 config.json
 user_languages.json
-logfile*
+user_wallet.json
+
 __pycache__/
 *.pyc
+playground*
+transactions_queue/*
+!transactions_queue/
+logfile/*
+!logfile/
