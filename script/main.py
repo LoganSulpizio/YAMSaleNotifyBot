@@ -77,10 +77,11 @@ def main():
 
     except Exception as e:
         # Log the error using write_log
-        write_log(f"{str(e)}")
+        write_log(f"{str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
 
 if __name__ == '__main__':
     try:
+        write_log("YAMSaleNotifyBot started", "logfile/logfile_YAMSaleNotifyBot.txt")
         main()
     except Exception as e:
-        write_log(f"Critical error in main: {str(e)}")
+        write_log(f"Critical error in main: {str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
