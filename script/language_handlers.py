@@ -59,13 +59,14 @@ async def handle_language_selection(update: Update, context: ContextTypes.DEFAUL
         save_user_languages(user_languages)  # Save the updated preferences
         language_set_message = translate(user_id, 'language_set')
         await query.answer()  # Acknowledge the callback
-        await send_message(update, context, language_set_message)
+        await send_message(user_id, context, language_set_message)
         return ConversationHandler.END  # End the conversation
     else:
         invalid_selection_message = translate(user_id, 'invalid_selection')
-        await send_message(update, context, invalid_selection_message)
+        await send_message(user_id, context, invalid_selection_message)
         return LANGUAGE_SELECTION  # Stay in the same state
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await send_message(update, context, "Operation cancelled.")
+    user_id = update.effective_user.id  # Extract the user ID
+    await send_message(user_id, context, "Operation cancelled.")  # Use the user ID as chat_id
     return ConversationHandler.END  # End the conversation

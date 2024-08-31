@@ -10,6 +10,7 @@ from contract_data import contract_data
 from language_handlers import translate
 from utilities import send_message, write_log
 import json
+import shutil
 
 
 # Read the tx json files
@@ -24,6 +25,7 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
     price = data['price']
     amount = data['amount']
     tx_hash = data['transactionHash']
+    offerId = data['offerId']
 
     user_id_list = [key for key, value in user_wallets.items() if value == seller]
 
@@ -38,7 +40,7 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
         amount_dec = round(amount / 10 ** 18, 2)
         price_dec = round(price / 10 ** decimals, 2)
 
-        property_name = DataProperty[offerToken]['shortName']
+        property_name = DataProperty.get(offerToken, {}).get('shortName', 'unknown token')
 
         for user_id in user_id_list:
             message = translate(user_id,
@@ -47,13 +49,16 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
                                 price_dec = price_dec,
                                 property_name = property_name,
                                 token_name_buyer = token_name_buyer,
-                                tx_hash = tx_hash
+                                tx_hash = tx_hash,
+                                offerId = offerId
                                 )
             message_list.append(message)
 
     write_log(f"{path_file_event} has been processed", "logfile/logfile_YAMSaleNotifyBot.txt")
+    
     # delete file when it has been processed
     #os.remove(path_file_event)
+    shutil.move(path_file_event, 'logfile')
             
     if len(user_id_list) > 0:
         return user_id_list, message_list
@@ -65,25 +70,20 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
 # Asynchronous function to send the messages
 async def handle_tx_and_send_messages(path_file_event: str, user_wallets: dict, DataProperty: dict, context: ContextTypes.DEFAULT_TYPE):
     user_id_list, message_list = process_tx_file(path_file_event, user_wallets, DataProperty)
-    
+
     # Check if the lists are None
     if user_id_list is None or message_list is None:
         return  # Exit the function early if there's nothing to process
     
     for user_id, message in zip(user_id_list, message_list):
+        # Directly use chat_id to send the message
+        await send_message(user_id, context, text=message)
         write_log(f"Sale alert sent to {user_id}", "logfile/logfile_YAMSaleNotifyBot.txt")
-
-        # Create a dummy Update object for the user (This part might need adjustment depending on how your bot framework passes updates)
-        update = Update(update_id=0, message=context.bot.get_message(chat_id=user_id))
-
-        # Use the generic send_message function from utilities
-        await send_message(update, context, message)
-
         
 def get_token_decimals(buyerToken):
         for token, data in contract_data.items():
             if data.get('address') == buyerToken:
-                return data.get('decimals', None), token  # None as default if 'decimals' not found
+                return data.get('decimals', None), (token)  # None as default if 'decimals' not found
         return None  # Return None if no matching address is found
 
 

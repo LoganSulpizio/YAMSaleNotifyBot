@@ -62,8 +62,8 @@ def main():
     # Schedule the job to run every 10 seconds
     job_queue.run_repeating(
         check_for_new_sales_event,
-        interval=10,
-        first=10,  # first run after 10 seconds
+        interval=8,
+        first=8,  # first run after 10 seconds
         data={
             'user_wallets': user_wallets,  # Passes user_wallets to the job's context
             'DataProperty': DataProperty,  # Passes DataProperty to the job's context

@@ -55,12 +55,12 @@ def save_user_wallet(user_wallet):
         json.dump(user_wallet, file, ensure_ascii=False, indent=4)
 
 # Function to send messages with specific parameters
-async def send_message(update: Update, context, text: str):
+async def send_message(chat_id: int, context, text: str):
     params = {
         'disable_web_page_preview': True,
         'parse_mode': 'Markdown'
     }
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=text, **params)
+    await context.bot.send_message(chat_id=chat_id, text=text, **params)
 
 def compute_path(path_components: list):
 

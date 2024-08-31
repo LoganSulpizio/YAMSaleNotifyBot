@@ -29,13 +29,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 async def about(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
     about_message = translate(user_id, 'about') + "[Github](https://github.com/LoganSulpizio/YAMSaleNotifyBot)"
-    await send_message(update, context, about_message)
+    await send_message(user_id, context, about_message)
 
 # Function to handle the /setwallet command
 async def setwallet(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = update.effective_user.id
     wallet_prompt_message = translate(user_id, 'set_your_wallet')
-    await send_message(update, context, wallet_prompt_message)
+    await send_message(user_id, context, wallet_prompt_message)
     return WALLET_INPUT  # Move to WALLET_INPUT state
 
 # Function to handle wallet input
@@ -53,11 +53,11 @@ async def handle_wallet_input(update: Update, context: ContextTypes.DEFAULT_TYPE
         save_user_wallet(user_wallets)
 
         wallet_set_message = translate(user_id, 'wallet_has_been_set')
-        await send_message(update, context, wallet_set_message)
+        await send_message(user_id, context, wallet_set_message)
     else:
         # If the address is invalid, send an error message
         invalid_wallet_message = translate(user_id, 'invalid_wallet_format')
-        await send_message(update, context, invalid_wallet_message)
+        await send_message(user_id, context, invalid_wallet_message)
 
     return ConversationHandler.END  # End the conversation
 
@@ -80,6 +80,6 @@ async def checkinfo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     else:
         wallet_message = translate(user_id, 'check_wallet_none')
 
-    await send_message(update, context, language_message + wallet_message)
+    await send_message(user_id, context, language_message + wallet_message)
 
 # You can add more command handlers here as you expand your bot's functionality
