@@ -75,8 +75,7 @@ def compute_path(path_components: list):
 def load_DataProperty():
     with open('config.json', 'r', encoding='utf-8') as file:
         config = json.load(file)
-    path_components_DataProperty = config['DataProteryPath']
-    path_DataProperty = compute_path(path_components_DataProperty)
+    path_DataProperty = config['DataProteryPath']
     
     with open(path_DataProperty, 'r') as file:
         data_dict = json.load(file)
