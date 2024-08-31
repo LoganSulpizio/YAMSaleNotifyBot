@@ -61,6 +61,8 @@ async def handle_wallet_input(update: Update, context: ContextTypes.DEFAULT_TYPE
         invalid_wallet_message = translate(user_id, 'invalid_wallet_format')
         await send_message(user_id, context, invalid_wallet_message)
 
+        return WALLET_INPUT  # Stay in the WALLET_INPUT state for re-entry
+
     return ConversationHandler.END  # End the conversation
 
 # Function to handle the /checkinfo command
