@@ -17,11 +17,13 @@ def initialize_user_wallet(loaded_wallets):
 
 # Function to handle the /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text(
-        f'[EN] *Welcome!*\n' +
-        f'[FR] *Bienvenue!*\n' + 
-        f'[ES] *¡Bienvenido!*'
+    user_id = update.effective_user.id
+    about_message = (
+        f'\\[_EN_] *Welcome!*\n' +
+        f'\\[_FR_] *Bienvenue!*\n' + 
+        f'\\[_ES_] *¡Bienvenido!*'
         )
+    await send_message(user_id, context, about_message)
     # Call the setlanguage function to start the language selection process
     return await setlanguage(update, context)
 
