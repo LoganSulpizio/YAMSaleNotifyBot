@@ -6,6 +6,6 @@ __pycache__/
 *.pyc
 playground*
 transactions_queue/*
-!transactions_queue/
+!transactions_queue/.gitkeep
 logfile/*
-!logfile/
+!logfile/.gitkeep
