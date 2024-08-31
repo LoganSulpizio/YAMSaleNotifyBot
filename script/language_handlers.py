@@ -56,7 +56,7 @@ async def handle_language_selection(update: Update, context: ContextTypes.DEFAUL
 
     if text in language_mapping:
         user_languages[user_id] = language_mapping[text]
-        write_log(f"{user_id} has set its language to {language_mapping[text]}", "logfile/logfile_YAMSaleNotifyBot.txt")
+        write_log(f"user {user_id} has set its language to {language_mapping[text]}", "logfile/logfile_YAMSaleNotifyBot.txt")
         save_user_languages(user_languages)  # Save the updated preferences
         language_set_message = translate(user_id, 'language_set')
         await query.answer()  # Acknowledge the callback

@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 from eth_utils import is_address, to_checksum_address
 from language_handlers import translate, get_user_languages, setlanguage
-from utilities import send_message, save_user_wallet
+from utilities import send_message, save_user_wallet, write_log
 
 # Conversation states
 WALLET_INPUT = 2
@@ -52,6 +52,7 @@ async def handle_wallet_input(update: Update, context: ContextTypes.DEFAULT_TYPE
         
         # Store the checksummed wallet address in the dictionary
         user_wallets[user_id] = checksummed_address
+        write_log(f"user {user_id} has set its wallet to {checksummed_address}", "logfile/logfile_YAMSaleNotifyBot.txt")
         save_user_wallet(user_wallets)
 
         wallet_set_message = translate(user_id, 'wallet_has_been_set')
