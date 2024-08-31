@@ -11,13 +11,34 @@
         "check_language_none": "No preferred language has been set up",
         "check_wallet": "Your wallet address is set to {user_wallet}",
         "check_wallet_none": "No wallet address has been set up",
-        "sale_message": "You sold *{amount_dec}* token *{property_name}* for *{price_dec}* {token_name_buyer}\nView it on [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
+        "sale_message": "🔔 Sale notification 🔔\nYou sold *{amount_dec}* token *{property_name}* for *{price_dec}* {token_name_buyer} (_offer {offerId}_)\nView it on [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
     },
     "FR": {
         "select_language_prompt": "Veuillez sélectionner votre langue:\n",
-        "language_set": "Langue définie sur le français",
-        "your_language": "Votre langue sélectionnée est le français",
-        "invalid_selection": "Sélection invalide. Choisissez parmis les langues proposées",
-        "about": "Ce bot a été développé par @LoganSulpizio\nConsultez ce projet sur "
+        "language_set": "Votre langue a été configurée.\nVous pouvez maintenant utiliser la commande /setwallet pour configurer l'adresse de votre wallet. Vous recevrez une notification pour chaque vente de Realtoken réalisée sur le YAM.",
+        "invalid_selection": "Sélection invalide. Veuillez sélectionner une langue",
+        "about": "Ce bot a été développé par @LoganSulpizio\nConsultez ce projet sur ",
+        "set_your_wallet": "Veuillez entrer l'adresse de votre wallet: ",
+        "wallet_has_been_set": "L'adresse de votre wallet a été configurée avec succès.\nVous recevrez des notifications pour chaque RealToken que vous vendez sur le YAM",
+        "invalid_wallet_format": "Votre adresse est invalide. Veuillez utiliser une adresse au format '0x...'",
+        "check_language": "Votre langue est définie sur {user_language}",
+        "check_language_none": "Aucune langue préférée n'a été configurée",
+        "check_wallet": "L'adresse de votre wallet est définie sur {user_wallet}",
+        "check_wallet_none": "Aucun wallet n'a été configurée",
+        "sale_message": "🔔 Notification de vente 🔔\nVous avez vendu *{amount_dec}* token(s) *{property_name}* pour *{price_dec}* {token_name_buyer} (_offre {offerId}_)\nConsultez la transaction sur [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
+    },
+    "ES": {
+        "select_language_prompt": "Por favor, seleccione su idioma:\n",
+        "language_set": "Su idioma ha sido configurado.\nAhora puede usar el comando /setwallet para configurar la dirección de su wallet. Recibirá una notificación por cada venta de Realtoken realizada en el YAM.",
+        "invalid_selection": "Selección inválida. Por favor seleccione un idioma",
+        "about": "Este bot fue desarrollado por @LoganSulpizio\nConsulte este proyecto en ",
+        "set_your_wallet": "Por favor, ingrese la dirección de su wallet: ",
+        "wallet_has_been_set": "La dirección de su wallet ha sido configurada con éxito.\nRecibirá notificaciones por cada RealToken que venda en el YAM",
+        "invalid_wallet_format": "Su dirección es inválida. Por favor, use una dirección en el formato '0x...'",
+        "check_language": "Su idioma está configurado en {user_language}",
+        "check_language_none": "No se ha configurado ningún idioma preferido",
+        "check_wallet": "La dirección de su wallet está configurada en {user_wallet}",
+        "check_wallet_none": "No se ha configurado ningún wallet",
+        "sale_message": "🔔 Notificación de venta 🔔\nHa vendido *{amount_dec}* token(s) *{property_name}* por *{price_dec}* {token_name_buyer} (_oferta {offerId}_)\nConsulte la transacción en [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
     }
 }
