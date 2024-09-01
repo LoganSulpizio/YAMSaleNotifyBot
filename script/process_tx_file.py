@@ -37,8 +37,11 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
 
         decimals, token_name_buyer = get_token_decimals(buyerToken)
         
-        amount_dec = round(amount / 10 ** 18, 2)
-        price_dec = round(price / 10 ** decimals, 2)
+        amount_dec = amount / 10 ** 18
+        price_dec_per_token = price / 10 ** decimals
+
+        price_dec_total = round(price_dec_per_token * amount_dec, 2)
+        amount_dec = round(amount_dec, 2)
 
         property_name = DataProperty.get(offerToken, {}).get('shortName', 'unknown token')
 
@@ -46,7 +49,7 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
             message = translate(user_id,
                                 'sale_message',
                                 amount_dec = amount_dec,
-                                price_dec = price_dec,
+                                price_dec_total = price_dec_total,
                                 property_name = property_name,
                                 token_name_buyer = token_name_buyer,
                                 tx_hash = tx_hash,
@@ -54,7 +57,7 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
                                 )
             message_list.append(message)
 
-    write_log(f"{path_file_event} has been processed", "logfile/logfile_YAMSaleNotifyBot.txt")
+    write_log(f"{tx_hash} has been processed", "logfile/logfile_YAMSaleNotifyBot.txt")
     
     # delete file when it has been processed
     #os.remove(path_file_event)
