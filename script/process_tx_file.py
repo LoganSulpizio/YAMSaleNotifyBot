@@ -61,6 +61,11 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
     
     # delete file when it has been processed
     #os.remove(path_file_event)
+
+    # Check if the destination file exists
+    destination = os.path.join('logfile', os.path.basename(path_file_event))
+    if os.path.exists(destination):
+        os.remove(destination)  # Remove the existing file
     shutil.move(path_file_event, 'logfile')
             
     if len(user_id_list) > 0:
