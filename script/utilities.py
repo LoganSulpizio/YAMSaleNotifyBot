@@ -1,8 +1,8 @@
-from telegram import Update
 import json
 import os
 import datetime
 import pytz
+import time
 
 # File path to store user language preferences and wallet set up
 USER_PREF_LANGUAGE_FILE = 'user_languages.json'
