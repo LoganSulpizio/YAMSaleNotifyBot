@@ -11,7 +11,11 @@
         "check_language_none": "No preferred language has been set up",
         "check_wallet": "Your wallet address is set to {user_wallet}",
         "check_wallet_none": "No wallet address has been set up",
-        "sale_message": "🔔 Sale notification 🔔\nYou sold *{amount_dec}* token *{property_name}* for *{price_dec_total}* {token_name_buyer} (_offer {offerId}_)\nView it on [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
+        "sale_message": "🔔 Sale notification 🔔\nYou sold *{amount_dec}* token(s) *{property_name}* for *{price_dec_total}* {token_name_buyer} (_offer {offerId}_)\nView it on [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})",
+        "menu_setwallet": "🔔 Enter your wallet address to receive sales notifications",
+        "menu_checkinfo": "ℹ️ Check your info",
+        "menu_setlanguage":"🌐 Select your language",
+        "menu_about":"✍️ About the Author"
     },
     "FR": {
         "select_language_prompt": "Veuillez sélectionner votre langue:\n",
@@ -25,20 +29,28 @@
         "check_language_none": "Aucune langue préférée n'a été configurée",
         "check_wallet": "L'adresse de votre wallet est définie sur {user_wallet}",
         "check_wallet_none": "Aucun wallet n'a été configurée",
-        "sale_message": "🔔 Notification de vente 🔔\nVous avez vendu *{amount_dec}* token(s) *{property_name}* pour *{price_dec_total}* {token_name_buyer} (_offre {offerId}_)\nConsultez la transaction sur [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
+        "sale_message": "🔔 Notification de vente 🔔\nVous avez vendu *{amount_dec}* token(s) *{property_name}* pour *{price_dec_total}* {token_name_buyer} (_offre {offerId}_)\nConsultez la transaction sur [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})",
+        "menu_setwallet": "🔔 Entrer votre wallet pour recevoir des notifications",
+        "menu_checkinfo": "ℹ️ Vérifier vos données",
+        "menu_setlanguage":"🌐 Sélectionner votre langue",
+        "menu_about":"✍️ A propos de l'auteur"
     },
     "ES": {
         "select_language_prompt": "Por favor, seleccione su idioma:\n",
         "language_set": "Su idioma ha sido configurado.\nAhora puede usar el comando /setwallet para configurar la dirección de su wallet. Recibirá una notificación por cada venta de Realtoken realizada en el YAM.",
-        "invalid_selection": "Selección inválida. Por favor seleccione un idioma",
+        "invalid_selection": "Selección no válida. Por favor, seleccione un idioma",
         "about": "Este bot fue desarrollado por @LoganSulpizio\nConsulte este proyecto en ",
-        "set_your_wallet": "Por favor, ingrese la dirección de su wallet: ",
-        "wallet_has_been_set": "La dirección de su wallet ha sido configurada con éxito.\nRecibirá notificaciones por cada RealToken que venda en el YAM",
+        "set_your_wallet": "Por favor, introduzca la dirección de su wallet: ",
+        "wallet_has_been_set": "La dirección de su wallet ha sido configurada con éxito.\nRecibirá notificaciones por cada RealToken que venda en el YAM.",
         "invalid_wallet_format": "Su dirección es inválida. Por favor, use una dirección en el formato '0x...'",
         "check_language": "Su idioma está configurado en {user_language}",
-        "check_language_none": "No se ha configurado ningún idioma preferido",
+        "check_language_none": "No se ha configurado un idioma preferido",
         "check_wallet": "La dirección de su wallet está configurada en {user_wallet}",
-        "check_wallet_none": "No se ha configurado ningún wallet",
-        "sale_message": "🔔 Notificación de venta 🔔\nHa vendido *{amount_dec}* token(s) *{property_name}* por *{price_dec_total}* {token_name_buyer} (_oferta {offerId}_)\nConsulte la transacción en [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})"
+        "check_wallet_none": "No se ha configurado ninguna wallet",
+        "sale_message": "🔔 Notificación de venta 🔔\nHa vendido *{amount_dec}* token(s) *{property_name}* por *{price_dec_total}* {token_name_buyer} (_oferta {offerId}_)\nConsulte la transacción en [Gnosisscan](https://gnosisscan.io/tx/{tx_hash})",
+        "menu_setwallet": "🔔 Ingrese su wallet para recibir notificaciones",
+        "menu_checkinfo": "ℹ️ Verificar su información",
+        "menu_setlanguage": "🌐 Seleccionar su idioma",
+        "menu_about": "✍️ Acerca del autor"
     }
 }
