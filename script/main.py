@@ -1,6 +1,6 @@
 from telegram.ext import ApplicationBuilder, CommandHandler, ConversationHandler, MessageHandler, filters, CallbackQueryHandler, JobQueue
 from utilities import load_token, load_user_languages, load_user_wallet, load_DataProperty, write_log
-from language_handlers import setlanguage, handle_language_selection, cancel, LANGUAGE_SELECTION, initialize_user_languages
+from language_handlers import setlanguage, handle_language_selection, cancel, LANGUAGE_SELECTION, initialize_user_languages, reinitialize_user_commands
 from handlers import start, about, setwallet, handle_wallet_input, checkinfo, WALLET_INPUT, initialize_user_wallet
 from process_tx_file import check_for_new_sales_event
 from warnings import filterwarnings
@@ -22,6 +22,9 @@ def main():
         # Load user language preferences and initialize in the language_handlers module
         user_languages = load_user_languages()
         initialize_user_languages(user_languages)
+        # initialize the custom commands according to each user's preferred language
+        reinitialize_user_commands(application)
+        print("Custom commands according to each user's preferred language have been set")
 
         # Load user wallet and initialize in the handlers module
         user_wallets = load_user_wallet()
@@ -73,6 +76,7 @@ def main():
         )
 
         # Run the bot
+        print("YAMSaleNotifyBot running...")
         application.run_polling()
 
     except Exception as e:
@@ -82,7 +86,7 @@ def main():
 if __name__ == '__main__':
     try:
         write_log("YAMSaleNotifyBot started", "logfile/logfile_YAMSaleNotifyBot.txt")
-        print('YAMSaleNotiFyBot started...')
+        print('script started')
         main()
     except Exception as e:
         write_log(f"Critical error in main: {str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")

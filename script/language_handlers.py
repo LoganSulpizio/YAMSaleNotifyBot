@@ -1,6 +1,7 @@
-from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton, BotCommand, BotCommandScopeChat
 from telegram.ext import ContextTypes, ConversationHandler
 from utilities import translations, language_mapping, save_user_languages, send_message, write_log
+import asyncio
 
 # Conversation states
 LANGUAGE_SELECTION = 1
@@ -60,7 +61,12 @@ async def handle_language_selection(update: Update, context: ContextTypes.DEFAUL
         save_user_languages(user_languages)  # Save the updated preferences
         language_set_message = translate(user_id, 'language_set')
         await query.answer()  # Acknowledge the callback
+
+        # Update the bot commands for this user, with await
+        await update_bot_commands(user_id, context)
+
         await send_message(user_id, context, language_set_message)
+
         return ConversationHandler.END  # End the conversation
     else:
         invalid_selection_message = translate(user_id, 'invalid_selection')
@@ -71,3 +77,28 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = update.effective_user.id  # Extract the user ID
     await send_message(user_id, context, "Operation cancelled.")  # Use the user ID as chat_id
     return ConversationHandler.END  # End the conversation
+
+async def update_bot_commands(user_id, context):
+    # Retrieve translated commands based on user's language
+    commands = [
+        BotCommand("setwallet", translate(user_id, 'menu_setwallet')),
+        BotCommand("checkinfo", translate(user_id, 'menu_checkinfo')),
+        BotCommand("setlanguage", translate(user_id, 'menu_setlanguage')),
+        BotCommand("about", translate(user_id, 'menu_about'))
+    ]
+
+    # Update the bot commands dynamically for the specific user
+    await context.bot.set_my_commands(commands, scope=BotCommandScopeChat(user_id))
+
+def reinitialize_user_commands(context):
+    loop = asyncio.get_event_loop()  # Get the existing event loop
+
+    for user_id, language in user_languages.items():
+        commands = [
+            BotCommand("setwallet", translate(user_id, 'menu_setwallet')),
+            BotCommand("checkinfo", translate(user_id, 'menu_checkinfo')),
+            BotCommand("setlanguage", translate(user_id, 'menu_setlanguage')),
+            BotCommand("about", translate(user_id, 'menu_about'))
+        ]
+        # Use loop.run_until_complete to run the async set_my_commands in sync context
+        loop.run_until_complete(context.bot.set_my_commands(commands, scope=BotCommandScopeChat(user_id)))
