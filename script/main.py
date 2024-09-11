@@ -25,6 +25,7 @@ def main():
         # initialize the custom commands according to each user's preferred language
         reinitialize_user_commands(application)
         print("Custom commands according to each user's preferred language have been set")
+        write_log("Custom commands according to each user's preferred language have been set", "logfile/logfile_YAMSaleNotifyBot.txt")
 
         # Load user wallet and initialize in the handlers module
         user_wallets = load_user_wallet()
@@ -77,6 +78,7 @@ def main():
 
         # Run the bot
         print("YAMSaleNotifyBot running...")
+        write_log("YAMSaleNotifyBot running...", "logfile/logfile_YAMSaleNotifyBot.txt")
         application.run_polling()
 
     except Exception as e:
@@ -85,7 +87,7 @@ def main():
 
 if __name__ == '__main__':
     try:
-        write_log("YAMSaleNotifyBot started", "logfile/logfile_YAMSaleNotifyBot.txt")
+        write_log("script started", "logfile/logfile_YAMSaleNotifyBot.txt")
         print('script started')
         main()
     except Exception as e:
