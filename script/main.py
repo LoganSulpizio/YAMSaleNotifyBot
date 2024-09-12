@@ -1,10 +1,12 @@
-from telegram.ext import ApplicationBuilder, CommandHandler, ConversationHandler, MessageHandler, filters, CallbackQueryHandler, JobQueue
-from utilities import load_token, load_user_languages, load_user_wallet, load_DataProperty, write_log
+from telegram.ext import ApplicationBuilder, CommandHandler, ConversationHandler, MessageHandler, filters, CallbackQueryHandler
+from telegram.error import NetworkError, TelegramError
+from utilities import load_token, load_user_languages, load_user_wallet, load_DataProperty, write_log, send_telegram_alert
 from language_handlers import setlanguage, handle_language_selection, cancel, LANGUAGE_SELECTION, initialize_user_languages, reinitialize_user_commands
 from handlers import start, about, setwallet, handle_wallet_input, checkinfo, WALLET_INPUT, initialize_user_wallet
 from process_tx_file import check_for_new_sales_event
 from warnings import filterwarnings
 from telegram.warnings import PTBUserWarning
+import time
 
 # Suppress PTBUserWarning related to CallbackQueryHandler
 filterwarnings(action="ignore", message=r".*CallbackQueryHandler", category=PTBUserWarning)
@@ -79,11 +81,24 @@ def main():
         # Run the bot
         print("YAMSaleNotifyBot running...")
         write_log("YAMSaleNotifyBot running...", "logfile/logfile_YAMSaleNotifyBot.txt")
-        application.run_polling()
+
+        while True:
+            try:
+                application.run_polling()
+            except NetworkError:
+                print("NetworkError: Retrying in 5 seconds...")
+                write_log("NetworkError: Retrying in 5 seconds...", "logfile/logfile_YAMSaleNotifyBot.txt")
+                time.sleep(5)
+            except TelegramError as e:
+                print(f"TelegramError occurred: {str(e)}")
+                write_log(f"TelegramError occurred: {str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
+                send_telegram_alert(f"YAMSaleNotifyBot - TelegramError occurred: {str(e)}")
+                time.sleep(5)
 
     except Exception as e:
         # Log the error using write_log
         write_log(f"{str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
+        send_telegram_alert(f"YAMSaleNotifyBot - TelegramError occurred: {str(e)}")
 
 if __name__ == '__main__':
     try:

@@ -2,7 +2,7 @@ import json
 import os
 import datetime
 import pytz
-import time
+import requests
 
 # File path to store user language preferences and wallet set up
 USER_PREF_LANGUAGE_FILE = 'user_languages.json'
@@ -115,3 +115,27 @@ def write_log(message, log_file="logfile.txt"):
     # Write the log message to the (new or original) log file
     with open(log_file, "a") as file:
         file.write(log_message)
+
+
+def send_telegram_alert(message):
+
+    with open('config.json', 'r', encoding='utf-8') as file:
+        config = json.load(file)
+        group_id = config["chat_id_alert"]
+        bot_token = config["bot_alert_token"]
+
+    # The Telegram Bot API endpoint URL
+    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
+    
+    # Parameters for the message
+    params = {
+        'chat_id': group_id,
+        'text': message,
+        'disable_web_page_preview': True,
+        'parse_mode': 'Markdown'
+    }
+    
+    # Send the message
+    response = requests.post(url, json=params)
+
+    return response
