@@ -1,12 +1,13 @@
 from telegram.ext import ApplicationBuilder, CommandHandler, ConversationHandler, MessageHandler, filters, CallbackQueryHandler
 from telegram.error import NetworkError, TelegramError
-from utilities import load_token, load_user_languages, load_user_wallet, load_DataProperty, write_log, send_telegram_alert
+from utilities import load_token, load_user_languages, load_user_wallet, load_DataProperty, reload_DataProperty, write_log, send_telegram_alert
 from language_handlers import setlanguage, handle_language_selection, cancel, LANGUAGE_SELECTION, initialize_user_languages, reinitialize_user_commands
 from handlers import start, about, setwallet, handle_wallet_input, checkinfo, WALLET_INPUT, initialize_user_wallet
 from process_tx_file import check_for_new_sales_event
 from warnings import filterwarnings
 from telegram.warnings import PTBUserWarning
 import time
+from datetime import time as time_obj
 
 # Suppress PTBUserWarning related to CallbackQueryHandler
 filterwarnings(action="ignore", message=r".*CallbackQueryHandler", category=PTBUserWarning)
@@ -76,6 +77,13 @@ def main():
                 'DataProperty': DataProperty,  # Passes DataProperty to the job's context
                 'path_transaction_queue_folder': 'transactions_queue/'  # Passes the folder path to the job's context
             }
+        )
+
+        # Schedule daily update of DataProperty at 7 AM
+        job_queue.run_daily(
+            reload_DataProperty,
+            time=time_obj(3, 0),  # Schedule for 5:00 AM (time in utc)
+            data={'DataProperty': DataProperty}
         )
 
         # Run the bot

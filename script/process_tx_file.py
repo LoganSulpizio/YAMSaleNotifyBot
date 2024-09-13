@@ -10,7 +10,7 @@ from contract_data import contract_data
 from language_handlers import translate
 from utilities import send_message, write_log
 import json
-import shutil
+#import shutil
 
 
 # Read the tx json files
@@ -60,13 +60,13 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
     write_log(f"{tx_hash} has been processed", "logfile/logfile_YAMSaleNotifyBot.txt")
     
     # delete file when it has been processed
-    #os.remove(path_file_event)
+    os.remove(path_file_event)
 
     # Check if the destination file exists
-    destination = os.path.join('logfile', os.path.basename(path_file_event))
-    if os.path.exists(destination):
-        os.remove(destination)  # Remove the existing file
-    shutil.move(path_file_event, 'logfile')
+    #destination = os.path.join('logfile', os.path.basename(path_file_event))
+    #if os.path.exists(destination):
+    #    os.remove(destination)  # Remove the existing file
+    #shutil.move(path_file_event, 'logfile')
             
     if len(user_id_list) > 0:
         return user_id_list, message_list
