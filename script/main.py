@@ -106,7 +106,7 @@ def main():
     except Exception as e:
         # Log the error using write_log
         write_log(f"An error occured: {str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
-        send_telegram_alert(f"YAMSaleNotifyBot - TelegramError occurred: {str(e)}")
+        send_telegram_alert(f"YAMSaleNotifyBot - An error occurred: {str(e)}")
 
 if __name__ == '__main__':
     try:
