@@ -100,5 +100,12 @@ def reinitialize_user_commands(context):
             BotCommand("setlanguage", translate(user_id, 'menu_setlanguage')),
             BotCommand("about", translate(user_id, 'menu_about'))
         ]
-        # Use loop.run_until_complete to run the async set_my_commands in sync context
-        loop.run_until_complete(context.bot.set_my_commands(commands, scope=BotCommandScopeChat(user_id)))
+
+        try:
+            # Use loop.run_until_complete to run the async set_my_commands in sync context
+            loop.run_until_complete(context.bot.set_my_commands(commands, scope=BotCommandScopeChat(user_id)))
+        except Exception as e:
+            # Log the exception (you can customize this to your logging system)
+            write_log(f"Failed to initialize commands for user {user_id}: {e}", "logfile/logfile_YAMSaleNotifyBot.txt")
+            # Skip to the next user if an error occurs
+            continue
