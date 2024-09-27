@@ -104,10 +104,8 @@ async def check_for_new_sales_event(context: ContextTypes.DEFAULT_TYPE):
     
     # Get the list of files in the specified folder
     try:
-        files = os.listdir(path_transaction_queue_folder)
-        
-        # Filter the list to include only JSON files
-        json_files = [file for file in files if file.endswith('.json')]
+        with os.scandir(path_transaction_queue_folder) as entries:
+            json_files = [entry.name for entry in entries if entry.name.endswith('.json')]
         
         if json_files:
             for file in json_files:
