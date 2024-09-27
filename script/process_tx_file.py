@@ -92,7 +92,7 @@ def get_token_decimals(buyerToken):
         for token, data in contract_data.items():
             if data.get('address') == buyerToken:
                 return data.get('decimals', None), (token)  # None as default if 'decimals' not found
-        return None  # Return None if no matching address is found
+        return None, None  # Return None if no matching address is found
 
 
 
@@ -113,7 +113,8 @@ async def check_for_new_sales_event(context: ContextTypes.DEFAULT_TYPE):
                 # Trigger the asynchronous function to process the file and send messages
                 await handle_tx_and_send_messages(path_file_event, user_wallets, DataProperty, context)
     
-    except FileNotFoundError:
+    except FileNotFoundError as e:
+        write_log(f"FileNotFoundError: {e}", "logfile/logfile_YAMSaleNotifyBot.txt")
         raise FileNotFoundError(f"The folder '{path_transaction_queue_folder}' does not exist.")
         
 if __name__ == '__main__':
