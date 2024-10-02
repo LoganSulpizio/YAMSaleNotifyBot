@@ -102,6 +102,11 @@ def main():
                 write_log(f"TelegramError occurred: {str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
                 send_telegram_alert(f"YAMSaleNotifyBot - TelegramError occurred: {str(e)}")
                 time.sleep(5)
+            except Exception as e:
+                # Log the error using write_log
+                write_log(f"An error occured: {str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
+                send_telegram_alert(f"YAMSaleNotifyBot - An error occurred: {str(e)}")
+            
 
     except Exception as e:
         # Log the error using write_log
