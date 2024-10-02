@@ -92,7 +92,7 @@ def get_token_decimals(buyerToken):
         for token, data in contract_data.items():
             if data.get('address') == buyerToken:
                 return data.get('decimals', None), (token)  # None as default if 'decimals' not found
-        return None, None  # Return None if no matching address is found
+        return 18, ''  # Return None if no matching address is found
 
 
 
