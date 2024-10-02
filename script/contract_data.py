@@ -31,6 +31,10 @@ contract_data = {
     },
     'wrapperRMMV3' : {
         'address' : '0x10497611Ee6524D75FC45E3739F472F83e282AD5',
+    },
+    'REG' : {
+        'address' : '0x0aa1e96d2a46ec6beb2923de1e61addf5f5f1dce',
+        'decimals' : 18,
     }
 }
 
