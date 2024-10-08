@@ -16,7 +16,7 @@ language_mapping = {
     '3': 'ES'
 }
 
-def write_log(message, log_file="logfile.txt"):
+def write_log(message, log_file="logfile/logfile.txt"):
     # Define the Brussels/Paris time zone
     paris_tz = pytz.timezone('Europe/Paris')
     
@@ -32,16 +32,18 @@ def write_log(message, log_file="logfile.txt"):
     # Prepare the log message
     log_message = f"{log_timestamp}: {message}\n"
     
-    # Check if the log file exists and its size
-    if os.path.exists(log_file) and os.path.getsize(log_file) >= 500 * 1024:  # 500 KB
-        # Format the timestamp for renaming the file
-        rename_timestamp = paris_now.strftime("%Y%m%d_%H%M%S")
-        
-        # Generate the new file name with the timestamp
-        new_log_file = f"{log_file.rsplit('.', 1)[0]}_{rename_timestamp}.txt"
-        
-        # Rename the current log file
-        os.rename(log_file, new_log_file)
+    if utc_now.hour % 4 == 0 and utc_now.minute % 4 == 0:
+
+        # Check if the log file exists and its size
+        if os.path.exists(log_file) and os.path.getsize(log_file) >= 3000 * 1024:  # 3000 KB
+            # Format the timestamp for renaming the file
+            rename_timestamp = paris_now.strftime("%Y%m%d_%H%M%S")
+            
+            # Generate the new file name with the timestamp
+            new_log_file = f"{log_file.rsplit('.', 1)[0]}_{rename_timestamp}.txt"
+            
+            # Rename the current log file
+            os.rename(log_file, new_log_file)
     
     # Write the log message to the (new or original) log file
     with open(log_file, "a") as file:
