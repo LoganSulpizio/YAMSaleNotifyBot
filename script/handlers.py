@@ -1,6 +1,9 @@
 from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 from eth_utils import is_address, to_checksum_address
+from YAM_DB_handlers.get_all_offer_ids_by_seller import get_all_offer_ids_by_seller
+from w3_interaction.get_offer import get_multiple_offers
+from offer_handlers.handle_raw_offer import handle_raw_offer
 from language_handlers import translate, get_user_languages, setlanguage
 from utilities import send_message, save_user_wallet, write_log
 
@@ -32,6 +35,36 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
     about_message = translate(user_id, 'about') + "[Github](https://github.com/LoganSulpizio/YAMSaleNotifyBot)"
     await send_message(user_id, context, about_message)
+
+# Function to handle the /getcurrentoffers command
+async def getcurrentoffers(update: Update, context: ContextTypes.DEFAULT_TYPE, DataProperty: dict, db_path:str, w3) -> None:
+    user_id = update.effective_user.id
+    user_wallet = user_wallets.get(user_id, None)
+
+    write_log(f"getcurrentoffers used by user {user_id}", "logfile/logfile_YAMSaleNotifyBot.txt")
+
+    offer_ids = get_all_offer_ids_by_seller(db_path, user_wallet, ['InProgress'])
+    raw_offers = await get_multiple_offers(w3, offer_ids)
+
+    message = '*' + translate(user_id, 'current_listed_offer') + '*'
+    
+    for raw_offer in raw_offers:
+        offer = handle_raw_offer(raw_offer, DataProperty)
+        if isinstance(offer, dict) and offer['remaining_amount'] != 0:
+            line = (
+                translate(user_id, 'id_icon') + f" [{offer['id']}](https://yambyofferid.netlify.app/?offerId={offer['id']}) " +
+                translate(user_id, 'house_icon') + f" *{offer['offer_token']}*\n" +
+                translate(user_id, 'money_icon') + f" *{round(offer['price'], 2)}* {offer['buyer_token']} - *{round(offer['remaining_amount'], 2)}* token(s)\n\n"
+            )
+        else:
+            line = ''
+        message += line
+
+    # case if no current sales:
+    if message == '*' + translate(user_id, 'current_listed_offer') + '*':
+        message += translate(user_id, 'no_listed_offers')
+
+    await send_message(user_id, context, message)
 
 # Function to handle the /setwallet command
 async def setwallet(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

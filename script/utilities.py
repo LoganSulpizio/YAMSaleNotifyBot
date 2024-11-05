@@ -3,6 +3,7 @@ import os
 import datetime
 import pytz
 import requests
+from web3 import Web3
 
 # File path to store user language preferences and wallet set up
 USER_PREF_LANGUAGE_FILE = 'user_languages.json'
@@ -61,6 +62,16 @@ def load_token():
     with open('config.json', 'r', encoding='utf-8') as file:
         config = json.load(file)
         return config['TOKEN']
+
+def load_db_path():
+    with open('config.json', 'r', encoding='utf-8') as file:
+        config = json.load(file)
+        return config['db_path']
+
+def load_w3():
+    with open('config.json', 'r', encoding='utf-8') as file:
+        config = json.load(file)
+        return Web3(Web3.HTTPProvider(config['w3_url_1']))
 
 def load_user_languages():
     if os.path.exists(USER_PREF_LANGUAGE_FILE):

@@ -82,6 +82,7 @@ async def update_bot_commands(user_id, context):
     # Retrieve translated commands based on user's language
     commands = [
         BotCommand("setwallet", translate(user_id, 'menu_setwallet')),
+        BotCommand("getcurrentoffers", translate(user_id, 'menu_getcurrentoffers')),
         BotCommand("checkinfo", translate(user_id, 'menu_checkinfo')),
         BotCommand("setlanguage", translate(user_id, 'menu_setlanguage')),
         BotCommand("about", translate(user_id, 'menu_about'))
@@ -96,6 +97,7 @@ def reinitialize_user_commands(context):
     for user_id, language in user_languages.items():
         commands = [
             BotCommand("setwallet", translate(user_id, 'menu_setwallet')),
+            BotCommand("getcurrentoffers", translate(user_id, 'menu_getcurrentoffers')),
             BotCommand("checkinfo", translate(user_id, 'menu_checkinfo')),
             BotCommand("setlanguage", translate(user_id, 'menu_setlanguage')),
             BotCommand("about", translate(user_id, 'menu_about'))

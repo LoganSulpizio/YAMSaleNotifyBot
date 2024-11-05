@@ -1,11 +1,12 @@
 from telegram.ext import ApplicationBuilder, CommandHandler, ConversationHandler, MessageHandler, filters, CallbackQueryHandler
 from telegram.error import NetworkError, TelegramError
-from utilities import load_token, load_user_languages, load_user_wallet, load_DataProperty, reload_DataProperty, write_log, send_telegram_alert
+from utilities import load_token, load_db_path, load_w3, load_user_languages, load_user_wallet, load_DataProperty, reload_DataProperty, write_log, send_telegram_alert
 from language_handlers import setlanguage, handle_language_selection, cancel, LANGUAGE_SELECTION, initialize_user_languages, reinitialize_user_commands
-from handlers import start, about, setwallet, handle_wallet_input, checkinfo, WALLET_INPUT, initialize_user_wallet
+from handlers import start, about, setwallet, handle_wallet_input, checkinfo, WALLET_INPUT, initialize_user_wallet, getcurrentoffers
 from process_tx_file import check_for_new_sales_event
 from warnings import filterwarnings
 from telegram.warnings import PTBUserWarning
+from functools import partial
 import time
 from datetime import time as time_obj
 
@@ -16,6 +17,8 @@ def main():
     try:
         token = load_token()
         DataProperty = load_DataProperty()
+        db_path = load_db_path()
+        w3 = load_w3()
 
         application = ApplicationBuilder().token(token).build()
 
@@ -51,6 +54,9 @@ def main():
 
         # Register the /about command handler
         application.add_handler(CommandHandler("about", about))
+
+        # Register the /currentsales command handler
+        application.add_handler(CommandHandler("getcurrentoffers", partial(getcurrentoffers, DataProperty=DataProperty, db_path=db_path, w3=w3)))
         
         # Register the /checkinfo command handler
         application.add_handler(CommandHandler("checkinfo", checkinfo))
