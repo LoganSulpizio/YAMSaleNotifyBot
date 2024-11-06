@@ -36,8 +36,11 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
         message_list = []
 
         decimals, token_name_buyer = get_token_decimals(buyerToken)
+
+        decimals_realtoken = 18
+        if offerToken == '0x0675e8F4A52eA6c845CB6427Af03616a2af42170': decimals_realtoken = 9 # RWA has 9 decimals and not 18
         
-        amount_dec = amount / 10 ** 18
+        amount_dec = amount / 10 ** decimals_realtoken
         price_dec_per_token = price / 10 ** decimals
 
         price_dec_total = round(price_dec_per_token * amount_dec, 2)
