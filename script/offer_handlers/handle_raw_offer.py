@@ -23,9 +23,9 @@ def handle_raw_offer(raw_offer: list, DataProperty: dict):
         offer['buyer_token'] = buyer_token
 
         decimals_realtoken = 18
-        if raw_offer[1] == '0x0675e8F4A52eA6c845CB6427Af03616a2af42170': decimals_realtoken = 9 # RWA has 9 decimals and not 18
+        if raw_offer[0] == '0x0675e8F4A52eA6c845CB6427Af03616a2af42170': decimals_realtoken = 9 # RWA has 9 decimals and not 18
 
-        offer['price'] = raw_offer[4] / 10 ** contract_data[buyer_token]['decimals']
+        offer['price'] = raw_offer[4] / 10 ** contract_data.get(buyer_token, {}).get('decimals', 18)
         offer['remaining_amount'] = raw_offer[5] / 10 ** decimals_realtoken
 
     return offer
