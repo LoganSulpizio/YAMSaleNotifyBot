@@ -16,6 +16,7 @@ def handle_raw_offer(raw_offer: list, DataProperty: dict):
     offer['seller_address'] = raw_offer[2]
     offer['buyer_address'] = raw_offer[3]
 
+    ### Sale offer ###
     if raw_offer[1] in [contract['address'] for contract in contract_data.values() if 'address' in contract]:
         buyer_token = next((key for key, contract in contract_data.items() if contract.get('address') == raw_offer[1]), None)
 
@@ -27,6 +28,8 @@ def handle_raw_offer(raw_offer: list, DataProperty: dict):
 
         offer['price'] = raw_offer[4] / 10 ** contract_data.get(buyer_token, {}).get('decimals', 18)
         offer['remaining_amount'] = raw_offer[5] / 10 ** decimals_realtoken
+    else:
+        return None
 
     return offer
 
