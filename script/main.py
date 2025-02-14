@@ -120,9 +120,6 @@ def main():
         send_telegram_alert(f"YAMSaleNotifyBot - An error occurred: {str(e)}")
 
 if __name__ == '__main__':
-    try:
-        write_log("script started", "logfile/logfile_YAMSaleNotifyBot.txt")
-        print('script started')
-        main()
-    except Exception as e:
-        write_log(f"Critical error in main: {str(e)}", "logfile/logfile_YAMSaleNotifyBot.txt")
+    write_log("script started", "logfile/logfile_YAMSaleNotifyBot.txt")
+    print('script started')
+    main()
