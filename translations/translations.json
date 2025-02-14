@@ -21,7 +21,7 @@
         "menu_checkinfo": "ℹ️ Check your info",
         "menu_setlanguage":"🌐 Select your language",
         "menu_about":"✍️ About the Author",
-        "menu_getcurrentoffers" : "[Beta] 📋 List all your current sales"
+        "menu_getcurrentoffers" : "📋 [Beta] List all your current sales"
     },
     "FR": {
         "select_language_prompt": "Veuillez sélectionner votre langue:\n",
@@ -45,7 +45,7 @@
         "menu_checkinfo": "ℹ️ Vérifier vos données",
         "menu_setlanguage":"🌐 Sélectionner votre langue",
         "menu_about":"✍️ A propos de l'auteur",
-        "menu_getcurrentoffers" : "[Beta] 📋 Lister vos ventes en cours"
+        "menu_getcurrentoffers" : "📋 [Beta] Lister vos ventes en cours"
     },
     "ES": {
         "select_language_prompt": "Por favor, seleccione su idioma:\n",
@@ -69,6 +69,6 @@
         "menu_checkinfo": "ℹ️ Verificar su información",
         "menu_setlanguage": "🌐 Seleccionar su idioma",
         "menu_about": "✍️ Acerca del autor",
-        "menu_getcurrentoffers" : "[Beta] 📋 Liste todas sus ventas actuales"
+        "menu_getcurrentoffers" : "📋 [Beta] Liste todas sus ventas actuales"
     }
 }
