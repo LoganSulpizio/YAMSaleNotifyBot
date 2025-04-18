@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 from eth_utils import is_address, to_checksum_address
 from YAM_DB_handlers.get_all_offer_ids_by_seller import get_all_offer_ids_by_seller
-from w3_interaction.get_offer import get_multiple_offers
+from w3_interaction.get_offer import get_offers_multicall
 from offer_handlers.handle_raw_offer import handle_raw_offer
 from language_handlers import translate, get_user_languages, setlanguage
 from utilities import send_message, save_user_wallet, write_log
@@ -44,7 +44,7 @@ async def getcurrentoffers(update: Update, context: ContextTypes.DEFAULT_TYPE, D
     write_log(f"getcurrentoffers used by user {user_id}", "logfile/logfile_YAMSaleNotifyBot.txt")
 
     offer_ids = get_all_offer_ids_by_seller(db_path, user_wallet, ['InProgress'])
-    raw_offers = await get_multiple_offers(w3, offer_ids)
+    raw_offers = get_offers_multicall(w3, offer_ids)
 
     message = '*' + translate(user_id, 'current_listed_offer') + '*'
     
