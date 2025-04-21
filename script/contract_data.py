@@ -37,6 +37,10 @@ contract_data = {
         'address' : '0x0aa1e96d2a46ec6beb2923de1e61addf5f5f1dce',
         'decimals' : 18,
     },
+    'REUSD' : {
+        'address' : '0x3390742Ac0DCe14EA6Fcbd5Ae02e2303C5D62Ad9',
+        'decimals' : 18,
+    },
     'RWA Holdings SA' : {
         'address' : '0x0675e8F4A52eA6c845CB6427Af03616a2af42170',
         'decimals': 9,
