@@ -35,30 +35,75 @@ def process_tx_file(path_file_event: str, user_wallets: dict, DataProperty: dict
         user_id_list = [key for key, value in user_wallets.items() if value == seller]
         message_list = []
 
-        decimals, token_name_buyer = get_token_decimals(buyerToken)
-
-        decimals_realtoken = 18
-        if offerToken == '0x0675e8F4A52eA6c845CB6427Af03616a2af42170': decimals_realtoken = 9 # RWA has 9 decimals and not 18
+        mode = None
+        # mode 1: sale offer
+        # mode 2: purchase offer
         
-        amount_dec = amount / 10 ** decimals_realtoken
-        price_dec_per_token = price / 10 ** decimals
+        stablecoin_YAM = [
+            '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d', # WXDAI
+            '0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83', # USDC
+            '0xeD56F76E9cBC6A64b821e9c016eAFbd3db5436D1', # ARMMV3USDC
+            '0x0cA4f5554Dd9Da6217d62D8df2816c82bba4157b', # ARMMV3WXDAI
+        ]
 
-        price_dec_total = round(price_dec_per_token * amount_dec, 2)
-        amount_dec = round(amount_dec, 2)
+        if buyerToken in stablecoin_YAM:
+            mode = 1
+        elif offerToken in stablecoin_YAM:
+            mode = 2
 
-        property_name = DataProperty.get(offerToken, {}).get('shortName', 'unknown token')
+        if mode == 1: # Sale offer
 
-        for user_id in user_id_list:
-            message = translate(user_id,
-                                'sale_message',
-                                amount_dec = amount_dec,
-                                price_dec_total = price_dec_total,
-                                property_name = property_name,
-                                token_name_buyer = token_name_buyer,
-                                tx_hash = tx_hash,
-                                offerId = offerId
-                                )
-            message_list.append(message)
+            decimals, token_name_buyer = get_token_decimals(buyerToken)
+
+            decimals_realtoken = 18
+            if offerToken == '0x0675e8F4A52eA6c845CB6427Af03616a2af42170': decimals_realtoken = 9 # RWA has 9 decimals and not 18
+
+            amount_dec = amount / 10 ** decimals_realtoken
+            price_dec_per_token = price / 10 ** decimals
+
+            price_dec_total = round(price_dec_per_token * amount_dec, 2)
+            amount_dec = round(amount_dec, 2)
+
+            property_name = DataProperty.get(offerToken, {}).get('shortName', 'unknown token')
+
+            for user_id in user_id_list:
+                message = translate(user_id,
+                                    'sale_message',
+                                    amount_dec = amount_dec,
+                                    price_dec_total = price_dec_total,
+                                    property_name = property_name,
+                                    token_name_buyer = token_name_buyer,
+                                    tx_hash = tx_hash,
+                                    offerId = offerId
+                                    )
+                message_list.append(message)
+
+        elif mode == 2: # Purchase offer
+            
+            decimals, token_name_offer = get_token_decimals(offerToken)
+
+            decimals_realtoken = 18
+            if buyerToken == '0x0675e8F4A52eA6c845CB6427Af03616a2af42170': decimals_realtoken = 9 # RWA has 9 decimals and not 18
+
+            price_dec_per_token = 10 ** decimals_realtoken / price
+            amount_dec = amount * price / 10 ** (decimals + decimals_realtoken)
+
+            price_dec_per_token = round(price_dec_per_token, 2)
+            amount_dec = round(amount_dec, 2)
+
+            property_name = DataProperty.get(buyerToken, {}).get('shortName', 'unknown token')
+
+            for user_id in user_id_list:
+                message = translate(user_id,
+                                    'purchase_message',
+                                    amount_dec = amount_dec,
+                                    price_dec = price_dec_per_token,
+                                    property_name = property_name,
+                                    token_name_offer = token_name_offer,
+                                    tx_hash = tx_hash,
+                                    offerId = offerId
+                                    )
+                message_list.append(message)
 
     write_log(f"{tx_hash} has been processed", "logfile/logfile_YAMSaleNotifyBot.txt")
     
@@ -91,10 +136,10 @@ async def handle_tx_and_send_messages(path_file_event: str, user_wallets: dict, 
         await send_message(user_id, context, text=message)
         write_log(f"Sale alert sent to {user_id}", "logfile/logfile_YAMSaleNotifyBot.txt")
         
-def get_token_decimals(buyerToken):
-        for token, data in contract_data.items():
-            if data.get('address') == buyerToken:
-                return data.get('decimals', None), (token)  # None as default if 'decimals' not found
+def get_token_decimals(token_address):
+        for token_name, data in contract_data.items():
+            if data.get('address') == token_address:
+                return data.get('decimals', None), (token_name)  # None as default if 'decimals' not found
         return 18, ''  # Return None if no matching address is found
 
 
