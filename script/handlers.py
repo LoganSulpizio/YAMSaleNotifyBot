@@ -48,6 +48,9 @@ async def getcurrentoffers(update: Update, context: ContextTypes.DEFAULT_TYPE, D
 
     message = '*' + translate(user_id, 'current_listed_offer') + '*'
     
+    total_at_sale = 0
+    total_number_of_token_at_sale = 0
+
     for raw_offer in raw_offers:
         offer = handle_raw_offer(raw_offer, DataProperty)
         if isinstance(offer, dict) and offer['remaining_amount'] != 0:
@@ -59,10 +62,18 @@ async def getcurrentoffers(update: Update, context: ContextTypes.DEFAULT_TYPE, D
         else:
             line = ''
         message += line
+        total_at_sale += offer['price'] * offer['remaining_amount']
+        total_number_of_token_at_sale += offer['remaining_amount']
 
     # case if no current sales:
     if message == '*' + translate(user_id, 'current_listed_offer') + '*':
         message += translate(user_id, 'no_listed_offers')
+    else:
+        message += translate(user_id,
+                            'total_current_sales',
+                            total_number_of_token_at_sale = round(total_number_of_token_at_sale, 2),
+                            total_at_sale = round(total_at_sale, 2),
+                            )
 
     await send_message(user_id, context, message)
 
